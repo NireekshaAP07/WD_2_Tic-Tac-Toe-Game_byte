@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260924-05-f84ad47","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YACgEZulLoA,0","Arial Narrow":"YAGyDvJ_4Ts,0","Arial Rounded MT Bold":"YAFcfoaHu-s,0","Arial":"YAGyDvJ_4Ts,0","Avenir Next":"YAFcfmNq6UY,0","Baloo 2":"YADK30bC6HQ,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Broken Glyph":"YADZ-exUkv0,0","Canva Sans":"YAFdJjTk5UU,1","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAFcfvtOAUY,1","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","Courier Prime":"YAD1aFjegN8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAFdJpU7Kkk,0","Georgia":"YAGzXkO0pEM,0","Ghost Mono":"YAHQutsX00Q,0","Hanken Grotesk":"YAFcfhwp99E,0","Helvetica Neue":"YAFcf6CtJfI,0","Helvetica":"YAFcf6CtJfI,0","IBM Plex Mono":"YAFdJkmvhGI,0","Impact":"YAFcfnjI7Vk,0","Instrument Serif":"YAHFeOnZNEk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YADK3zbC6RM,0","JetBrains Mono":"YAFdJksXcAk,0","Josefin Sans":"YAFdJjvw9Ps,0","Lato":"YAFdJuFCnaw,0","Libre Baskerville":"YACgEUFdPdA,0","Lobster":"YAD8SnSjSFI,0","Lora":"YACgEXvxf8Q,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YAFdtQi73Xs,0","Nunito":"YAFdJoNRMmU,1","Oleo Script":"YACgEQQ14jI,0","Oswald":"YACgEQY10lw,0","Pacifico":"YADLjORQ1u4,0","Phantom Sans":"YAFdJvgJ5TU,0","Playfair Display":"YAFdJhem5V8,1","Plus Jakarta Sans":"YAGvf3_u0_Q,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YAFdJpYtCxE,1","Raleway":"YAFdJhmxbVQ,1","Roboto Slab":"YAFdJswIKAg,0","Rockwell":"YAFcfyVZnN0,0","Rye":"YACgEdQP21k,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Source Serif 4":"YACgEfdj394,0","Space Grotesk":"YADZ-dYEmhg,0","Space Mono":"YADW1-vpsoc,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Trebuchet MS":"YAFcfrglpVA,0","UV Display":"YAEdVfSSpYo,0","UV Sans":"YAFdJvgJ5TU,0","Ubuntu":"YACgERDU--Q,0","Verdana":"YAGzXTctYtQ,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YAD1aFjegN8,0","ui-sans-serif":"YACkoD1yZN0,0"}}');</script><script src="/_sdk/83d6dfdadcd4750a.telemetry_sdk.js" integrity="sha512-XS4Dvzp6vbagZS9vFErihvr8aO3S0tH78KWUefn06fmL4WYqryBtZj/IOLITYj7dFA4gPVvPg1W/JB1DK3uLNQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozy Tic Tac Toe</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --page-bg: #fbf3e8;
+      --panel: #fffdf9;
+      --board: #fffaf3;
+      --ink: #3e2b26;
+      --muted: #796861;
+      --line: #ead5c3;
+      --x: #b95743;
+      --o: #3f6d73;
+      --accent: #b95743;
+      --accent-ink: #ffffff;
+      --soft-accent: #f4d9cf;
+      --win: #f5df91;
+      --shadow: rgba(89, 55, 42, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--page-bg); }
+
+    body {
+      width: 100%;
+      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      transition: background-color .3s ease, color .3s ease;
+    }
+
+    button { font: inherit; }
+
+    .game-wrap {
+      width: 100%;
+      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
+      display: flex;
+      justify-content: center;
+      padding: clamp(1.5rem, 4vw, 3.5rem) 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-wrap::before,
+    .game-wrap::after {
+      content: "";
+      position: absolute;
+      width: 17rem;
+      height: 17rem;
+      border-radius: 50%;
+      opacity: .28;
+      pointer-events: none;
+    }
+
+    .game-wrap::before {
+      background: var(--soft-accent);
+      top: -8rem;
+      left: -8rem;
+    }
+
+    .game-wrap::after {
+      border: 2px dashed var(--line);
+      bottom: -9rem;
+      right: -8rem;
+    }
+
+    .game-content {
+      width: min(100%, 37rem);
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      animation: rise-in .55s ease both;
+    }
+
+    .app-title {
+      font-family: "Fraunces", serif;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: .7rem auto 1.75rem;
+      max-width: 28rem;
+    }
+
+    .game-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 2rem;
+      box-shadow: 0 18px 45px var(--shadow);
+      padding: clamp(1.25rem, 4vw, 2rem);
+      transition: background-color .3s ease, border-color .3s ease;
+    }
+
+    .turn-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .7rem;
+      min-height: 3rem;
+      margin-bottom: 1rem;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .turn-dot {
+      width: .7rem;
+      height: .7rem;
+      border-radius: 99px;
+      background: var(--x);
+      box-shadow: 0 0 0 5px var(--soft-accent);
+      transition: background-color .2s ease, box-shadow .2s ease;
+    }
+
+    .player-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .7rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .player-chip {
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      padding: .7rem .75rem;
+      font-size: .9rem;
+      font-weight: 700;
+      background: var(--board);
+      color: var(--muted);
+      transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
+    }
+
+    .player-chip.active {
+      color: var(--ink);
+      border-color: var(--accent);
+      background: var(--soft-accent);
+      transform: translateY(-2px);
+    }
+
+    .player-x { color: var(--x); }
+    .player-o { color: var(--o); }
+
+    .board {
+      width: min(100%, 25rem);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      padding: clamp(.45rem, 1.4vw, .65rem);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(.4rem, 1.4vw, .65rem);
+      background: var(--board);
+      border: 1px solid var(--line);
+      border-radius: 1.45rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+    }
+
+    .cell {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: var(--panel);
+      color: var(--ink);
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.45rem, 11vw, 4.15rem);
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform .16s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .cell:not(:disabled):hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: var(--soft-accent);
+      box-shadow: 0 6px 12px var(--shadow);
+    }
+
+    .cell:disabled { cursor: default; }
+
+    .cell.mark-x { color: var(--x); }
+    .cell.mark-o { color: var(--o); }
+
+    .cell.placed span {
+      animation: pop-in .28s cubic-bezier(.2, .9, .3, 1.25) both;
+    }
+
+    .cell.winner {
+      background: var(--win);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.45);
+    }
+
+    .cell:focus-visible,
+    .theme-option:focus-visible,
+    .action-button:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .status-area {
+      min-height: 3.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0 .4rem;
+    }
+
+    .result-message {
+      display: none;
+      align-items: center;
+      gap: .5rem;
+      border-radius: .9rem;
+      padding: .65rem .9rem;
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--soft-accent);
+    }
+
+    .result-message.show { display: inline-flex; animation: rise-in .25s ease both; }
+    .result-message svg { width: 1.1rem; height: 1.1rem; }
+    .draw-message { background: #efe7d8; }
+
+    .action-row {
+      display: flex;
+      justify-content: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin: .2rem 0 1.65rem;
+    }
+
+    .action-button {
+      min-height: 2.8rem;
+      padding: .65rem 1rem;
+      border-radius: .85rem;
+      border: 1px solid var(--line);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease, background-color .2s ease;
+    }
+
+    .action-button:hover { transform: translateY(-2px); box-shadow: 0 6px 14px var(--shadow); }
+
+    .reset-button { background: var(--board); color: var(--ink); }
+    .play-button { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+    .play-button[hidden] { display: none; }
+
+    .theme-area {
+      border-top: 1px dashed var(--line);
+      padding-top: 1.3rem;
+      text-align: left;
+    }
+
+    .theme-topline {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .theme-heading { margin: 0; color: var(--ink); }
+    .theme-helper { margin: .25rem 0 0; color: var(--muted); font-size: .82rem; }
+
+    .theme-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .45rem;
+      margin-top: .85rem;
+    }
+
+    .theme-option {
+      position: relative;
+      min-height: 2.9rem;
+      border: 2px solid transparent;
+      border-radius: .75rem;
+      background: var(--theme-light);
+      color: var(--theme-dark);
+      cursor: pointer;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: .3rem;
+      transition: transform .16s ease, border-color .16s ease;
+    }
+
+    .theme-option:hover { transform: translateY(-2px); }
+    .theme-option[aria-pressed="true"] { border-color: var(--ink); }
+    .theme-option[aria-pressed="true"]::after {
+      content: "✓";
+      position: absolute;
+      right: .25rem;
+      top: .12rem;
+      width: 1rem;
+      height: 1rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--panel);
+      font-size: .7rem;
+    }
+
+    .warm { --theme-light: #f4d9cf; --theme-dark: #6e3024; }
+    .lavender { --theme-light: #e4dcf4; --theme-dark: #43286d; }
+    .sage { --theme-light: #dce9d6; --theme-dark: #27513b; }
+    .blue { --theme-light: #d9e9f5; --theme-dark: #203d69; }
+    .peach { --theme-light: #f6d7c4; --theme-dark: #712b3f; }
+
+    .sparkle {
+      position: absolute;
+      color: var(--accent);
+      opacity: .55;
+      font-size: 1.3rem;
+      pointer-events: none;
+    }
+
+    .sparkle.one { top: 9rem; left: max(1.5rem, calc(50% - 22rem)); }
+    .sparkle.two { top: 18rem; right: max(1rem, calc(50% - 24rem)); font-size: .9rem; }
+
+    @keyframes pop-in {
+      from { transform: scale(.45) rotate(-8deg); opacity: 0; }
+      to { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 390px) {
+      .game-panel { border-radius: 1.5rem; padding: 1rem; }
+      .theme-options { gap: .3rem; }
+      .theme-option { font-size: .62rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/8de366929c5f3b48.data_sdk.js" type="text/javascript" integrity="sha512-TyQ8k8cZj66xe/aENmn6RyZpdOFZXbAo5+KBG3PeFM+Q4qMTHU8xAqmq4ADClNfPrstgQYV6OzZHwLTnElzB2g=="></script>
+  <script src="/_sdk/c90249f316bbe621.editing_sdk.js" type="text/javascript" integrity="sha512-cd4ICwG+3hl1AqLrCysr9GopLZ+2Cyjo2KMofj11Ys31LqLmkNEJhOQqYCwg6Nakgg+jlZ2JIdhM6PxWUR0zsg=="></script>
+  <script src="/_sdk/765e1fea0cec97ce.resizing_sdk.js" type="text/javascript" integrity="sha512-IRTJnqww0+HQ5V/LlWEQrlD5SrYHaVvaeVoNe8HYQXoaguzUGheSd9+n9s6WOgaTcEH0g37DuINHZ9aqfzWjlw=="></script>
+ </head>
+ <body data-template-id="__page-root" style="background: rgb(251, 243, 232);">
+  <main class="game-wrap" aria-labelledby="app-title"><span class="sparkle one" aria-hidden="true">✦</span> <span class="sparkle two" aria-hidden="true">✧</span>
+   <section class="game-content">
+    <header>
+     <h1 id="app-title" data-template-id="app-title" class="canva-text app-title" style="color: rgb(62, 43, 38); font-weight: 700; font-style: normal; font-size: 42px; letter-spacing: -0.04rem;">Tic Tac Toe</h1>
+     <p data-template-id="app-subtitle" class="canva-text subtitle" style="color: rgb(121, 104, 97); font-weight: 400; font-style: normal; font-size: 16px;">A cozy little game of X and O</p>
+    </header>
+    <section data-template-id="game-panel" class="canva-panel game-panel" aria-label="Tic Tac Toe game" style="background: rgb(255, 253, 249);">
+     <div class="turn-card" aria-live="polite" aria-atomic="true"><span id="turn-dot" class="turn-dot" aria-hidden="true"></span> <span data-template-id="turn-label" class="canva-text" style="color: rgb(62, 43, 38); font-weight: 700;"></span>
+     </div>
+     <div class="player-row" aria-label="Players">
+      <div id="x-player" class="player-chip active"><span class="player-x" aria-hidden="true">X</span> <span data-template-id="player-x-label" class="canva-text" style="color: rgb(185, 87, 67); font-weight: 700; font-style: normal; font-size: 16px;"> Player X</span>
+      </div>
+      <div id="o-player" class="player-chip"><span class="player-o" aria-hidden="true">O</span> <span data-template-id="player-o-label" class="canva-text" style="color: rgb(63, 109, 115); font-weight: 700; font-style: normal; font-size: 16px;"> Player O</span>
+      </div>
+     </div>
+     <div id="board" class="board" role="grid" aria-label="Tic Tac Toe board"><button class="cell" type="button" role="gridcell" data-index="0" aria-label="Top left, empty"></button> <button class="cell" type="button" role="gridcell" data-index="1" aria-label="Top middle, empty"></button> <button class="cell" type="button" role="gridcell" data-index="2" aria-label="Top right, empty"></button> <button class="cell" type="button" role="gridcell" data-index="3" aria-label="Middle left, empty"></button> <button class="cell" type="button" role="gridcell" data-index="4" aria-label="Center, empty"></button> <button class="cell" type="button" role="gridcell" data-index="5" aria-label="Middle right, empty"></button> <button class="cell" type="button" role="gridcell" data-index="6" aria-label="Bottom left, empty"></button> <button class="cell" type="button" role="gridcell" data-index="7" aria-label="Bottom middle, empty"></button> <button class="cell" type="button" role="gridcell" data-index="8" aria-label="Bottom right, empty"></button>
+     </div>
+     <div class="status-area" aria-live="assertive" aria-atomic="true">
+      <div id="x-win-message" data-template-id="x-win-message" class="canva-banner result-message" style="background: rgb(244, 217, 207); color: rgb(62, 43, 38); font-weight: 700; font-style: normal; font-size: 16px;">Player X wins! Lovely move.</div>
+      <div id="o-win-message" data-template-id="o-win-message" class="canva-banner result-message" style="background: rgb(220, 233, 228); color: rgb(38, 60, 44); font-weight: 700; font-style: normal; font-size: 16px;">Player O wins! Nicely played.</div>
+      <div id="draw-message" data-template-id="draw-message" class="canva-banner result-message draw-message" style="background: rgb(239, 231, 216); color: rgb(62, 43, 38); font-weight: 700; font-style: normal; font-size: 16px;">It’s a draw — so close!</div>
+     </div>
+     <div class="action-row"><button id="reset-game" type="button" data-template-id="reset-button" class="canva-button action-button reset-button" style="background: rgb(255, 250, 243); color: rgb(62, 43, 38); font-weight: 700; font-style: normal; font-size: 16px;">Reset Game</button> <button id="play-again" type="button" data-template-id="play-again-button" class="canva-button action-button play-button" hidden="" style="background: rgb(185, 87, 67); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">Play Again</button>
+     </div>
+     <section class="theme-area" aria-labelledby="theme-heading">
+      <div class="theme-topline">
+       <div>
+        <h2 id="theme-heading" data-template-id="theme-heading" class="canva-text theme-heading" style="color: rgb(62, 43, 38); font-weight: 700; font-style: normal; font-size: 24px;">Theme</h2>
+        <p data-template-id="theme-helper" class="canva-text theme-helper" style="color: rgb(121, 104, 97); font-weight: 400; font-style: normal; font-size: 16px;">Pick a palette that feels good to play in.</p>
+       </div>
+      </div>
+      <div class="theme-options" role="group" aria-label="Color theme choices"><button type="button" data-theme="warm" data-template-id="theme-warm" class="canva-button theme-option warm" aria-pressed="true" style="background: rgb(244, 217, 207); color: rgb(110, 48, 36); font-weight: 700; font-style: normal; font-size: 16px;">Warm</button> <button type="button" data-theme="lavender" data-template-id="theme-lavender" class="canva-button theme-option lavender" aria-pressed="false" style="background: rgb(228, 220, 244); color: rgb(67, 40, 109); font-weight: 700; font-style: normal; font-size: 16px;">Lavender</button> <button type="button" data-theme="sage" data-template-id="theme-sage" class="canva-button theme-option sage" aria-pressed="false" style="background: rgb(220, 233, 214); color: rgb(39, 81, 59); font-weight: 700; font-style: normal; font-size: 16px;">Sage</button> <button type="button" data-theme="blue" data-template-id="theme-blue" class="canva-button theme-option blue" aria-pressed="false" style="background: rgb(217, 233, 245); color: rgb(32, 61, 105); font-weight: 700; font-style: normal; font-size: 16px;">Blue</button> <button type="button" data-theme="peach" data-template-id="theme-peach" class="canva-button theme-option peach" aria-pressed="false" style="background: rgb(246, 215, 196); color: rgb(113, 43, 63); font-weight: 700; font-style: normal; font-size: 16px;">Peach</button>
+      </div>
+     </section>
+    </section>
+   </section>
+  </main>
+  <script>
+    const themes = {
+      warm: {
+        pageBg: "#fbf3e8", panel: "#fffdf9", board: "#fffaf3", ink: "#3e2b26",
+        muted: "#796861", line: "#ead5c3", x: "#b95743", o: "#3f6d73",
+        accent: "#b95743", softAccent: "#f4d9cf", win: "#f5df91", shadow: "rgba(89, 55, 42, 0.14)"
+      },
+      lavender: {
+        pageBg: "#f4f0fa", panel: "#fefcff", board: "#faf7fe", ink: "#302445",
+        muted: "#6d637c", line: "#ddd2e8", x: "#8f4e88", o: "#4b5192",
+        accent: "#5c3b83", softAccent: "#e4dcf4", win: "#e5d390", shadow: "rgba(57, 39, 80, 0.15)"
+      },
+      sage: {
+        pageBg: "#f1f5ec", panel: "#fdfffa", board: "#f8fbf4", ink: "#263c2c",
+        muted: "#627166", line: "#d1dfc9", x: "#ad5347", o: "#2f6a49",
+        accent: "#2f6a49", softAccent: "#dce9d6", win: "#dfe29b", shadow: "rgba(41, 76, 48, 0.14)"
+      },
+      blue: {
+        pageBg: "#eef5fa", panel: "#fbfdff", board: "#f5faff", ink: "#20324d",
+        muted: "#61708a", line: "#ccdeeb", x: "#b64c5c", o: "#245b91",
+        accent: "#245b91", softAccent: "#d9e9f5", win: "#e5d58f", shadow: "rgba(34, 68, 110, 0.14)"
+      },
+      peach: {
+        pageBg: "#fff1e9", panel: "#fffdfb", board: "#fff8f3", ink: "#482833",
+        muted: "#7e6167", line: "#efcfbf", x: "#9d3d50", o: "#5f657f",
+        accent: "#7f3043", softAccent: "#f6d7c4", win: "#f2da90", shadow: "rgba(103, 49, 54, 0.14)"
+      }
+    };
+
+    const positions = [
+      "Top left", "Top middle", "Top right",
+      "Middle left", "Center", "Middle right",
+      "Bottom left", "Bottom middle", "Bottom right"
+    ];
+
+    const winningLines = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+
+    const cells = Array.from(document.querySelectorAll(".cell"));
+    const board = document.getElementById("board");
+    const turnLabel = document.querySelector('[data-template-id="turn-label"]');
+    const turnDot = document.getElementById("turn-dot");
+    const xPlayer = document.getElementById("x-player");
+    const oPlayer = document.getElementById("o-player");
+    const playAgain = document.getElementById("play-again");
+    const messages = {
+      X: document.getElementById("x-win-message"),
+      O: document.getElementById("o-win-message"),
+      draw: document.getElementById("draw-message")
+    };
+
+    let game = Array(9).fill("");
+    let currentPlayer = "X";
+    let gameOver = false;
+
+    function updateTurnDisplay() {
+      if (gameOver) return;
+      turnLabel.textContent = "Player " + currentPlayer + "’s Turn";
+      const isX = currentPlayer === "X";
+      xPlayer.classList.toggle("active", isX);
+      oPlayer.classList.toggle("active", !isX);
+      turnDot.style.backgroundColor = isX ? "var(--x)" : "var(--o)";
+      turnDot.style.boxShadow = isX
+        ? "0 0 0 5px var(--soft-accent)"
+        : "0 0 0 5px var(--soft-accent)";
+    }
+
+    function clearMessages() {
+      Object.values(messages).forEach(message => message.classList.remove("show"));
+    }
+
+    function findWinner() {
+      for (const line of winningLines) {
+        const [a, b, c] = line;
+        if (game[a] && game[a] === game[b] && game[a] === game[c]) {
+          return { player: game[a], line };
+        }
+      }
+      return null;
+    }
+
+    function endGame(result) {
+      gameOver = true;
+      cells.forEach(cell => { cell.disabled = true; });
+      xPlayer.classList.remove("active");
+      oPlayer.classList.remove("active");
+
+      if (result.player) {
+        result.line.forEach(index => cells[index].classList.add("winner"));
+        turnLabel.textContent = "Game complete";
+        messages[result.player].classList.add("show");
+      } else {
+        turnLabel.textContent = "Game complete";
+        messages.draw.classList.add("show");
+      }
+
+      playAgain.hidden = false;
+    }
+
+    function makeMove(index) {
+      if (gameOver || game[index]) return;
+
+      game[index] = currentPlayer;
+      const cell = cells[index];
+      const mark = document.createElement("span");
+      mark.textContent = currentPlayer;
+      cell.appendChild(mark);
+      cell.classList.add("placed", currentPlayer === "X" ? "mark-x" : "mark-o");
+      cell.disabled = true;
+      cell.setAttribute("aria-label", positions[index] + ", " + currentPlayer);
+
+      const winner = findWinner();
+      if (winner) {
+        endGame(winner);
+        return;
+      }
+
+      if (game.every(Boolean)) {
+        endGame({});
+        return;
+      }
+
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      updateTurnDisplay();
+    }
+
+    function resetGame() {
+      game = Array(9).fill("");
+      currentPlayer = "X";
+      gameOver = false;
+      clearMessages();
+      playAgain.hidden = true;
+
+      cells.forEach((cell, index) => {
+        cell.disabled = false;
+        cell.className = "cell";
+        cell.replaceChildren();
+        cell.setAttribute("aria-label", positions[index] + ", empty");
+      });
+
+      updateTurnDisplay();
+      cells[0].focus();
+    }
+
+    function applyTheme(themeName) {
+      const theme = themes[themeName];
+      const root = document.documentElement;
+
+      root.style.setProperty("--page-bg", theme.pageBg);
+      root.style.setProperty("--panel", theme.panel);
+      root.style.setProperty("--board", theme.board);
+      root.style.setProperty("--ink", theme.ink);
+      root.style.setProperty("--muted", theme.muted);
+      root.style.setProperty("--line", theme.line);
+      root.style.setProperty("--x", theme.x);
+      root.style.setProperty("--o", theme.o);
+      root.style.setProperty("--accent", theme.accent);
+      root.style.setProperty("--soft-accent", theme.softAccent);
+      root.style.setProperty("--win", theme.win);
+      root.style.setProperty("--shadow", theme.shadow);
+
+      document.querySelectorAll(".theme-option").forEach(button => {
+        const chosen = button.dataset.theme === themeName;
+        button.setAttribute("aria-pressed", String(chosen));
+      });
+    }
+
+    cells.forEach(cell => {
+      cell.addEventListener("click", () => makeMove(Number(cell.dataset.index)));
+    });
+
+    document.getElementById("reset-game").addEventListener("click", resetGame);
+    playAgain.addEventListener("click", resetGame);
+
+    document.querySelectorAll(".theme-option").forEach(button => {
+      button.addEventListener("click", () => applyTheme(button.dataset.theme));
+    });
+
+    updateTurnDisplay();
+    lucide.createIcons();
+  </script>
+ 
+</body></html>
