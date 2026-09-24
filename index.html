@@ -336,6 +336,38 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Touch targets, safe areas, and viewport sizing for phones and tablets. */
+    .action-button, .theme-option {
+      min-height: 44px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @supports (min-height: 100dvh) {
+      body, .game-wrap { min-height: 100dvh; }
+    }
+
+    @media (max-width: 480px) {
+      .game-wrap {
+        padding-top: max(1rem, env(safe-area-inset-top));
+        padding-right: max(.75rem, env(safe-area-inset-right));
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        padding-left: max(.75rem, env(safe-area-inset-left));
+      }
+      .game-panel { border-radius: 1.35rem; padding: clamp(.85rem, 4vw, 1.25rem); }
+      .subtitle { margin-bottom: 1.1rem; }
+      .board { border-radius: 1rem; }
+      .cell { font-size: clamp(2.2rem, 15vw, 4rem); }
+      .theme-options { grid-template-columns: repeat(auto-fit, minmax(3.4rem, 1fr)); }
+    }
+
+    @media (max-height: 700px) and (orientation: landscape) {
+      .game-wrap { padding-top: .75rem; padding-bottom: .75rem; }
+      .subtitle { margin: .35rem auto .8rem; }
+      .board { width: min(60vh, 25rem); }
+      .game-panel { padding: 1rem; }
+    }
+
     @media (max-width: 390px) {
       .game-panel { border-radius: 1.5rem; padding: 1rem; }
       .theme-options { gap: .3rem; }
