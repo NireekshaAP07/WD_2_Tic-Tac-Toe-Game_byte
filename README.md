@@ -1,4 +1,4 @@
-# Cozy Tic Tac Toe
+# Cozy Tic Tac Toe - tictactobyte.netlify.app
 
 A small, responsive two-player Tic Tac Toe game built with HTML, CSS, and vanilla JavaScript. Two players take turns placing X and O on a 3 × 3 board. The game detects wins and draws, highlights a winning line, and offers several color themes.
 
